@@ -79,6 +79,7 @@ def rawInputHandler(expectedAnswers, actionHandlers):
         return None
     elif userInput.lower() in expectedAnswers:
         # respond to expected answers
+        return
 
 def requestWrapper(url=noaa_url, endpoint="datasets", headers=headers):
     r = requests.get(url + endpoint, headers=headers)
