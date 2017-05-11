@@ -1,0 +1,31 @@
+{
+  "name": "noaa_api_wrapper",
+  "version": "1.0.0",
+  "description": "An easy to use interface for accessing NOAA's api to retrieve and visualize climate data.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/john-mcgowan1992/noaa_api_wrapper.git"
+  },
+  "author": "John McGowan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/john-mcgowan1992/noaa_api_wrapper/issues"
+  },
+  "homepage": "https://github.com/john-mcgowan1992/noaa_api_wrapper#readme",
+  "dependencies": {
+    "caniuse-api": "^2.0.0",
+    "material-ui": "^0.18.0",
+    "node-sass": "^4.5.2",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
+    "webpack": "^2.5.1"
+  }
+}
