@@ -10,14 +10,14 @@ import requests
 import webbrowser
 import json
 
-import defaults
+import launcher_defaults
 
 # user information
-USER_NAME = defaults.USER_NAME
+USER_NAME = launcher_defaults.USER_NAME
 
 # request variables
 noaa_url = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"
-noaa_token = defaults.noaa_token
+noaa_token = launcher_defaults.noaa_token
 headers = {"token": noaa_token}
 noaa_enpoints = ["datasets"]
 
