@@ -12,6 +12,7 @@
 # API tokens and user-sensitive data
 launcher_defaults.py
 defaults.py
+database.py
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

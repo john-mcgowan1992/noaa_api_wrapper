@@ -17,18 +17,24 @@ USER_NAME = launcher_defaults.USER_NAME
 
 # request variables
 noaa_url = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"
+noaa_token_endpoint = "https://www.ncdc.noaa.gov/cdo-web/token"
+token_headers = {"email": ""}
 noaa_token = launcher_defaults.noaa_token
 headers = {"token": noaa_token}
 noaa_enpoints = ["datasets"]
 
 # cli interface prompts
 PROMPT = "|*|>>> "
-fallback_init = ["Will you be using the command line, or the GUI today?"]
-bot_init = ["Hi there! I'm climateBot"] + fallback_init
+bot_greeting = ["Hi there! I'm climateBot", "I'm here to make your life easier!", "I provide a simple interface for retrieving data from the NOAA open source datasets."]
+cli_or_gui_prompt = ["Will you be using the command line, or the GUI today?"]
+bot_init = bot_greeting + cli_or_gui_prompt
 bot_cli_flow = ["Okay, command line it is!", "Can I make a request for you?"]
 bot_gui_flow = ["Okay, graphical interface it is!", "Climate bot's graphical component runs in your favorite browswers!", "Would you like to launch the graphical component in your default browser?"]
 unhandled_response = ["I'm sorry, I didn't quite get that!"]
 termination_prompt = ["Oh well, I tried...", "Carry along with your day."]
+
+# User and api token setup prompts
+user_setup = ["It looks like you don't have a username or an api token yet.", "Would you like to set those up now? "]
 
 #cli handled responses
 affirmatives = ["yes", "ye", "y", "sure", "okay", "ok"]
@@ -52,19 +58,7 @@ def main(init=bot_init, cached_question=None):
     if cached_question == None:
         slow_print(init, 15)
         q = raw_input(PROMPT)
-        if q.lower() in cli_or_gui[0]:
-            slow_print(bot_cli_flow, 15)
-            cli_input = raw_input(PROMPT)
-            # run cli control handler
-            cli_control_handler(cli_input)
-        elif q.lower() in cli_or_gui[1]:
-            slow_print(bot_gui_flow, 15)
-            gui_input = raw_input(PROMPT)
-            # run gui control handler
-            gui_control_handler(gui_input)
-        else:
-            # rerun main() with fallback
-            main(unhandled_response + fallback_init)
+        formatHandler(q)
     else:
         slow_print(init)
         slow_print(cached_question)
@@ -76,6 +70,21 @@ def main(init=bot_init, cached_question=None):
             gui_control_handler(fallback_input)
         else:
             slow_print(["Error: climate bot is terminating"])
+
+def formatHandler(input):
+    if input.lower() in cli_or_gui[0]:
+            slow_print(bot_cli_flow, 15)
+            cli_input = raw_input(PROMPT)
+            # run cli control handler
+            cli_control_handler(cli_input)
+    elif input.lower() in cli_or_gui[1]:
+        slow_print(bot_gui_flow, 15)
+        gui_input = raw_input(PROMPT)
+        # run gui control handler
+        gui_control_handler(gui_input)
+    else:
+        # rerun main() with fallback
+        main(unhandled_response + cli_or_gui_prompt)
 
 def cli_control_handler(input):
     if input.lower() in affirmatives:
