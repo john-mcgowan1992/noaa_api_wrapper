@@ -1,20 +1,20 @@
 from flask import Flask
 from flask import request
-from flask import render_template
+from flask import Response
 from flask import send_from_directory
+from flask import render_template
+from flask import jsonify
+import os.path
 
-from defaults import APP_ROOT, CLIENT_ROOT, PUBLIC_ROOT, MODULE_DIR
+STATIC_RESOURCES = os.path.abspath("../client/public")
 
-app = Flask(__name__, template_folder=PUBLIC_ROOT)
+app = Flask(__name__, template_folder=STATIC_RESOURCES)
 
-@app.route("/node_modules/<path:filepath>")
-def serveModules(filepath):
-    return send_from_directory(MODULE_DIR, filepath)
-
-@app.route("/src/<path:filepath>")
-def serveComponents(filepath):
-    return send_from_directory(CLIENT_ROOT, filepath)
-
-@app.route('/')
+@app.route("/")
 def index():
     return render_template("index.html")
+
+@app.route("/api/public/<path:filepath>")
+def publicResources(filepath):
+    return send_from_directory(STATIC_RESOURCES, filepath)
+

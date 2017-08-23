@@ -9,11 +9,6 @@
 *.userosscache
 *.sln.docstates
 
-# API tokens and user-sensitive data
-app/server/defaults.py
-launcher/database.py
-launcher/launcher_defaults.py
-
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -240,6 +235,19 @@ FakesAssemblies/
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
 node_modules/
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # Typescript v1 declaration files
 typings/
