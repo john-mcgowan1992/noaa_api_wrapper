@@ -1,8 +1,9 @@
 # micro service to query NOAA's climate date API
-
 import time
 import sys
 import random
+import os.path
+import subprocess
 
 import urllib
 import httplib
@@ -10,25 +11,44 @@ import requests
 import webbrowser
 import json
 
-import launcher_defaults
+# database engine and session setup
+from launcher_defaults import API_TOKEN, USR_NAME, MYSQL_SECRET
+from database import User, Base, create_MySQL_engine, create_tables, create_session, find_or_create
+
+# filepaths
+CLIENT_DIR = os.path.abspath("../app/client/")
+print CLIENT_DIR
+
+engine = create_MySQL_engine(USR_NAME, MYSQL_SECRET, False)
+create_tables(Base, engine)
+session = create_session(engine)
 
 # user information
-USER_NAME = launcher_defaults.USER_NAME
+USER_NAME = USR_NAME
 
 # request variables
 noaa_url = "https://www.ncdc.noaa.gov/cdo-web/api/v2/"
-noaa_token = launcher_defaults.noaa_token
+noaa_token_endpoint = "https://www.ncdc.noaa.gov/cdo-web/token"
+token_headers = {"email": ""}
+noaa_token = API_TOKEN
 headers = {"token": noaa_token}
 noaa_enpoints = ["datasets"]
 
 # cli interface prompts
 PROMPT = "|*|>>> "
-fallback_init = ["Will you be using the command line, or the GUI today?"]
-bot_init = ["Hi there! I'm climateBot"] + fallback_init
+bot_greeting = ["Hi there! I'm climateBot", "I'm here to make your life easier!", "I provide a simple interface for retrieving data from the NOAA open source datasets."]
+welcome_back = ["Welcome back!", "Let's get started."]
+user_name_prompt = ["Please enter a user name."]
+user_name_confirm = ["You entered the following username: ", "Is that correct?"]
+cli_or_gui_prompt = ["Will you be using the command line, or the GUI today?"]
+bot_init = bot_greeting + cli_or_gui_prompt
 bot_cli_flow = ["Okay, command line it is!", "Can I make a request for you?"]
 bot_gui_flow = ["Okay, graphical interface it is!", "Climate bot's graphical component runs in your favorite browswers!", "Would you like to launch the graphical component in your default browser?"]
 unhandled_response = ["I'm sorry, I didn't quite get that!"]
 termination_prompt = ["Oh well, I tried...", "Carry along with your day."]
+
+# User and api token setup prompts
+user_setup = ["It looks like you don't have a username or an api token yet.", "Would you like to set those up now? "]
 
 #cli handled responses
 affirmatives = ["yes", "ye", "y", "sure", "okay", "ok"]
@@ -47,24 +67,35 @@ def slow_print(str_ls, rate=10):
         sys.stdout.flush()
         time.sleep((random.uniform(0, 1)/rate))
 
+def userSetup():
+    slow_print(user_setup)
+    setup = raw_input(PROMPT)
+    if setup in affirmatives:
+        slow_print(user_name_prompt)
+        user_name = raw_input(PROMPT)
+        user_name_confirm.insert(1, user_name)
+        slow_print(user_name_confirm)
+        confirmed = raw_input(PROMPT)
+        if confirmed.lower() in affirmatives:
+            user_flag = open("./user_flag/instantiated.txt", "a+")
+            user_flag.seek(0)
+            user_flag.write(user_name)
+            user_flag.close()
+            del user_name_confirm[1]
+        elif confirmed.lower() in negatives:
+            del user_name_confirm[1]
+            userSetup()
+    elif setup in negatives:
+        slow_print(termination_prompt)
+    else:
+        slow_print(unhandled_response)
+        userSetup()
 
-def main(init=bot_init, cached_question=None):
+def main(init=welcome_back+cli_or_gui_prompt, cached_question=None):
     if cached_question == None:
         slow_print(init, 15)
         q = raw_input(PROMPT)
-        if q.lower() in cli_or_gui[0]:
-            slow_print(bot_cli_flow, 15)
-            cli_input = raw_input(PROMPT)
-            # run cli control handler
-            cli_control_handler(cli_input)
-        elif q.lower() in cli_or_gui[1]:
-            slow_print(bot_gui_flow, 15)
-            gui_input = raw_input(PROMPT)
-            # run gui control handler
-            gui_control_handler(gui_input)
-        else:
-            # rerun main() with fallback
-            main(unhandled_response + fallback_init)
+        formatHandler(q)
     else:
         slow_print(init)
         slow_print(cached_question)
@@ -76,6 +107,21 @@ def main(init=bot_init, cached_question=None):
             gui_control_handler(fallback_input)
         else:
             slow_print(["Error: climate bot is terminating"])
+
+def formatHandler(input):
+    if input.lower() in cli_or_gui[0]:
+            slow_print(bot_cli_flow, 15)
+            cli_input = raw_input(PROMPT)
+            # run cli control handler
+            cli_control_handler(cli_input)
+    elif input.lower() in cli_or_gui[1]:
+        slow_print(bot_gui_flow, 15)
+        gui_input = raw_input(PROMPT)
+        # run gui control handler
+        gui_control_handler(gui_input)
+    else:
+        # rerun main() with fallback
+        main(unhandled_response + cli_or_gui_prompt)
 
 def cli_control_handler(input):
     if input.lower() in affirmatives:
@@ -92,7 +138,10 @@ def cli_control_handler(input):
 def gui_control_handler(input):
     if input.lower() in affirmatives:
         slow_print(["Very well.", "I'll spin up the application in your default browser", "My work here is done...", "Farewell, %s" % USER_NAME], 12)
-        webbrowser.open("http://www.noaa.gov", new=1, autoraise=True)
+        ENV = os.environ.copy()
+        ENV["FLASK_APP"] = "../server/server.py"
+        subprocess.Popen("npm start", cwd=CLIENT_DIR, env=ENV, shell=True)
+        webbrowser.open("http://localhost:8080", new=1, autoraise=True)
         return None
     elif input.lower() in negatives:
         slow_print(termination_prompt)
@@ -122,5 +171,11 @@ def rawInputHandler(expectedAnswers, actionHandlers):
 def request_wrapper(url=noaa_url, endpoint="datasets", headers=headers):
     r = requests.get(url + endpoint, headers=headers)
 
-# run
+# check file flag to see if this is programs first run locally
+if (os.path.isfile("./user_flag/instantiated.txt")):
+    pass
+else:
+    userSetup()
+
+# run 
 main()
