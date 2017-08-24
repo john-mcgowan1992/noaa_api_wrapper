@@ -1,0 +1,14 @@
+.App {
+  min-height: 100%;
+  position: relative;
+}
+
+.App .routeContainer {
+  padding-bottom: 60px;
+}
+
+.App .viewContainer {
+  max-width: 75%;
+  margin: auto;
+  text-align: center;
+}
