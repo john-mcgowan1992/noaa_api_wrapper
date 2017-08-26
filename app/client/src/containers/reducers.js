@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { REQUEST_GSOM_DATA, RECEIVE_GSOM_DATA } from './actions';
+import { REQUEST_GSOM_DATA, RECEIVE_GSOM_DATA, SET_QUERY_PARAMETERS } from './actions';
 
 function GSOM(
     state= {
@@ -23,8 +23,28 @@ function GSOM(
     }
 }
 
+function queryParameters(
+    state= {
+        datasetid: "",
+        startdate: "",
+        enddate: "",
+        locationid: "",
+        datatypeid: "",
+        units: ""
+    },
+    action
+) {
+    switch(action.type) {
+        case SET_QUERY_PARAMETERS:
+            return Object.assign({}, state, action.queryParameters)
+        default:
+            return state
+    }
+}
+
 const rootReducer = combineReducers({
-    GSOM
+    GSOM,
+    queryParameters
 })
 
 export default rootReducer;

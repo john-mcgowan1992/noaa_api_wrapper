@@ -10,7 +10,7 @@ import Navbar from '../Navbar/Navbar.jsx';
 import Dashboard from '../Dashboard/Dashboard.jsx';
 
 import { connect } from 'react-redux';
-import { fetchGSOMData } from '../../containers/actions.js';
+import { fetchGSOMData } from '../../containers/actions';
 
 const muiTheme = getMuiTheme({
     palette: {
