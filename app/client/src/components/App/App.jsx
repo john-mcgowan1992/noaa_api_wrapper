@@ -23,8 +23,8 @@ const muiTheme = getMuiTheme({
 class App extends Component {
 
     componentDidMount() {
-        const { dispatch } = this.props;
-        dispatch(fetchGSOMData());
+        // const { dispatch } = this.props;
+        // dispatch(fetchGSOMData());
     }
 
     render() {

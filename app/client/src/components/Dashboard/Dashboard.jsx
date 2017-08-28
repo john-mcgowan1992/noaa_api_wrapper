@@ -1,65 +1,82 @@
 import React, { Component } from 'react';
 import './Dashboard.css';
+import ApiWidget from '../ApiWidget/ApiWidget';
+import ApiDataDisplay from '../ApiDataDisplay/ApiDataDisplay';
 
-import ControlledText from '../ControlledText/ControlledText';
-import TextField from 'material-ui/TextField';
-import AppBar from 'material-ui/AppBar';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
+import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
 import { connect } from 'react-redux';
-import { setQueryParams } from '../../containers/actions';
-
-const containerStyle = {
-    maxHeight: 800,
-    maxWidth: 500,
-    margin: 'auto',
-}
+import { setQueryParams, fetchGSOMData } from '../../containers/actions';
 
 class Dashboard extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            datasetid: "",
-            startdate: "",
-            enddate: "",
-            locationid: "",
-            datatypeid: "",
-            units: ""
+            apiParams: {
+                datasetid: "",
+                startdate: "",
+                enddate: "",
+                locationid: "",
+                datatypeid: "",
+                units: ""
+            },
+            stepperIndex: 0
         }
 
         this._handleChange = this._handleChange.bind(this)
         this._handleClick = this._handleClick.bind(this)
+        this._completeStepper = this._completeStepper.bind(this)
+        this._stepBack = this._stepBack.bind(this)
     }
 
     _handleChange(key, event) {
-        this.setState({[ key ]: event.target.value})
+        const newState = Object.assign({}, this.state.apiParams, {
+            [ key ]: event.target.value
+        })
+        this.setState({apiParams: newState})
     }
 
-    _handleClick(event){
+    _handleClick(event) {
         const { dispatch } = this.props;
-        dispatch(setQueryParams(this.state))
+        const { stepperIndex } = this.state;
+        dispatch(setQueryParams(this.state.apiParams))
+        dispatch(fetchGSOMData(this.state.apiParams))
+        this.setState({"stepperIndex": stepperIndex + 1})
+    }
+
+    _completeStepper() {
+        const { stepperIndex } = this.state;
+        this.setState({"stepperIndex": stepperIndex + 1})
+    }
+
+    _stepBack() {
+        const { stepperIndex } = this.state;
+        this.setState({"stepperIndex": stepperIndex - 1})
     }
 
     render() {
         return (
             <div className="Dashboard">
-                <div className="apiParameterContainer">
-                    <Paper style={containerStyle} zDepth={3}>
-                        <AppBar title="Define Parameters" showMenuIconButton={false} />
-                        <div className="formContainer">
-                            <ControlledText floatingLabel="Dataset ID" hintText="GSOM" handleChange={this._handleChange} value={this.state.datasetid} stateKey="datasetid" />
-                            <ControlledText floatingLabel="Data Category" hintText="PRCP" handleChange={this._handleChange} value={this.state.datatypeid} stateKey="datatypeid" />
-                            <ControlledText floatingLabel="Location" hintText="ZIP:06830" handleChange={this._handleChange} value={this.state.locationid} stateKey="locationid" />
-                            <ControlledText floatingLabel="Start Date" hintText="1964-07-13" handleChange={this._handleChange} value={this.state.startdate} stateKey="startdate" />
-                            <ControlledText floatingLabel="End Date" hintText="1972-02-02" handleChange={this._handleChange} value={this.state.enddate} stateKey="enddate" />
-                            <div>
-                                <RaisedButton onClick={this._handleClick} style={{margin: 15}} label="Next" secondary={true}/>
-                            </div>
-                        </div>
-                    </Paper>
+                <div>
+                    <Stepper activeStep={this.state.stepperIndex}>
+                        <Step>
+                            <StepLabel>Configure Request</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>Raw Results</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>Export to Chart</StepLabel>
+                        </Step>
+                    </Stepper>
                 </div>
+                {
+                    this.state.stepperIndex === 0 ? 
+                    <ApiWidget next={this._handleClick} setParameter={this._handleChange} paramVals={this.state.apiParams} /> :
+                    <ApiDataDisplay next={this._completeStepper} previous={this._stepBack} queryResults={this.props.GSOM}/>
+                }
+                
             </div>
         )
     }

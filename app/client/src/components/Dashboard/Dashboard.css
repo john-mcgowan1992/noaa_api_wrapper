@@ -1,13 +1,5 @@
 .Dashboard {
     min-width: 100%;
     min-height: 95%;
-    margin: 10% auto;
-}
-
-.apiParameterContainer {
-    margin: 10% auto;
-}
-
-.Dashboard .formContainer {
-    padding: 3%;
+    margin: 5% auto;
 }
