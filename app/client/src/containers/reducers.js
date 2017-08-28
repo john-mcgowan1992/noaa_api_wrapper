@@ -16,7 +16,7 @@ function GSOM(
         case RECEIVE_GSOM_DATA:
             return Object.assign({}, state, {
                 isFetching: false,
-                data: [{PRCP: 28.2}, {PRCP: 24.1}]
+                data: action.data
             });
         default:
             return state;

@@ -8,14 +8,7 @@ export function fetchGSOMData (requestParams) {
     return dispatch => {
         dispatch({ type: REQUEST_GSOM_DATA, requestParams })
         axios.get("/api/noaa/data", {
-            params: {
-                datasetid: "GSOM",
-                startdate: "1941-06-06",
-                enddate: "1949-11-04",
-                locationid: "ZIP:06830",
-                datatypeid: "PRCP",
-                units: "standard"
-            }
+            params: requestParams
         })
         .then(res => {
             console.log("res:", res);

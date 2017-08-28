@@ -4,7 +4,7 @@ import TextField from 'material-ui/TextField';
 class ControlledText extends Component {
     constructor(){
         super()
-        this._wrapEventHandler = this._changeWrapper.bind(this)
+        this._changeWrapper = this._changeWrapper.bind(this)
     }
 
     _changeWrapper(e) {
@@ -15,7 +15,7 @@ class ControlledText extends Component {
         return (
             <TextField floatingLabelText={this.props.floatingLabel} 
                         hintText={this.props.hintText}
-                        onChange={this._wrapEventHandler}
+                        onChange={this._changeWrapper}
                         value={this.props.value} />
         )
     }
