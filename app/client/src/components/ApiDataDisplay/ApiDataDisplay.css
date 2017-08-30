@@ -1,10 +1,6 @@
-.ApiDataDisplay {
-    margin: 5% auto;
-}
-
 .ApiDataDisplay .dataResults {
     padding: 5%;
-    min-height: 400px;
+    min-height: 350px;
     max-width: 100%;
     text-align: left;
 }

@@ -8,7 +8,7 @@ class ControlledText extends Component {
     }
 
     _changeWrapper(e) {
-        this.props.handleChange(this.props.stateKey, e)
+        this.props.handleChange(this.props.stateKey, e.target.value)
     }
 
     render() {

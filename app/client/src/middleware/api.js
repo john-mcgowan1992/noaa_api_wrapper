@@ -1,0 +1,20 @@
+import axios from 'axios';
+
+export function verifyDatasetCategories (datasetid) {
+    return axios.get("/api/noaa/dataset/categories", {
+        params: {
+            datasetid
+        }
+    })
+}
+
+export function verifyDatasetLocation (datasetid, datacategoryid) {
+    return axios.get("/api/noaa/dataset/location", {
+        params: {
+            datasetid,
+            datacategoryid,
+            locationcategoryid: "CNTRY",
+            limit: 200
+        }
+    })
+}
