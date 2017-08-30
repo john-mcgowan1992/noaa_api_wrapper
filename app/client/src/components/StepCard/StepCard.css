@@ -1,0 +1,11 @@
+.StepCard {
+    margin: 5% auto;
+}
+
+.StepCard .stepCardContent {
+    padding: 6%;
+}
+
+.StepCard .cardButtons {
+    margin-top: 10%;
+}

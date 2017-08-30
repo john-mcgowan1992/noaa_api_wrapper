@@ -1,7 +1,12 @@
 .ApiWidget {
     margin: 5% auto;
+    box-sizing: border-box;
 }
 
 .ApiWidget .formContainer {
     padding: 3%;
+}
+
+.ApiWidget .cardButtons {
+    margin-top: 10%;
 }

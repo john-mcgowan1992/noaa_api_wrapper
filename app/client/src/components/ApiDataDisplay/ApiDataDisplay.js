@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
+import StepCard from '../StepCard/StepCard';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import AppBar from 'material-ui/AppBar';
 import JSONTree from 'react-json-tree';
 import './ApiDataDisplay.css';
 
@@ -35,16 +34,15 @@ class ApiDataDisplay extends Component {
     render() {
         return (
             <div className="ApiDataDisplay">
-                <Paper style={containerStyle} zDepth={4}>
-                    <AppBar title="Api Results" showMenuIconButton={false} />
+                <StepCard cardStyle={containerStyle} title="Choose Data Types">
                     <div className="dataResults">
-                           <JSONTree data={this.props.queryResults.data} theme={theme} hideRoot={true} invertTheme={true} />
+                        <JSONTree data={this.props.queryResults.data} theme={theme} hideRoot={true} invertTheme={true} />
                     </div>
                     <div className="stepButton">
                         <FlatButton onClick={this.props.previous} style={{margin: 15}} label="Back" />
                         <RaisedButton onClick={this.props.next} style={{margin: 15}} label="Next" secondary={true}/>
                     </div>
-                </Paper>
+                </StepCard>
             </div>
         )
     }
