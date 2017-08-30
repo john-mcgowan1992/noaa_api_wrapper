@@ -29,8 +29,8 @@ function queryParameters(
         startdate: "",
         enddate: "",
         locationid: "",
-        datatypeid: "",
-        units: ""
+        datacategoryid: "",
+        units: "standard"
     },
     action
 ) {
