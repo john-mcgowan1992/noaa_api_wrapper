@@ -21,7 +21,7 @@ class LocationWidget extends Component {
                                      />
                 <div className="cardButtons">
                     <FlatButton onClick={this.props.previous} style={{margin: 15}} label="Back" />
-                    <RaisedButton onClick={this.props.next} disabled={this.props.uiState.isFetching || !this.props.uiState.hasReturned} style={{margin: 15}} label="Next" secondary={true}/>
+                    <RaisedButton onClick={this.props.next} disabled={this.props.uiState.isFetching || !this.props.uiState.hasReturned || !this.props.paramVals["locationid"]} style={{margin: 15}} label="Next" secondary={true}/>
                 </div>
             </StepCard>
         )

@@ -22,7 +22,7 @@ class ApiWidget extends Component {
                                     handleChange={this.props.setParameter} 
                                     paramType="id" options={this.props.dataCategories} stateKey="datacategoryid" />
                 <div className="cardButtons">
-                    <RaisedButton onClick={this.props.next} disabled={this.props.uiState.isFetching || !this.props.uiState.hasReturned} style={{margin: 15}} label="Next" secondary={true}/>
+                    <RaisedButton onClick={this.props.next} disabled={this.props.uiState.isFetching || !this.props.uiState.hasReturned || !this.props.paramVals["datacategoryid"]} style={{margin: 15}} label="Next" secondary={true}/>
                 </div>
             </StepCard>
         )
