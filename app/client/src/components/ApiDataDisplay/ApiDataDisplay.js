@@ -34,7 +34,7 @@ class ApiDataDisplay extends Component {
     render() {
         return (
             <div className="ApiDataDisplay">
-                <StepCard cardStyle={containerStyle} title="Choose Data Types">
+                <StepCard cardStyle={containerStyle} title="Review Results">
                     <div className="dataResults">
                         <JSONTree data={this.props.queryResults.data} theme={theme} hideRoot={true} invertTheme={true} />
                     </div>

@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import './Dashboard.css';
 import MetaDataWidget from '../ApiWidgets/MetaDataWidget';
 import LocationWidget from '../ApiWidgets/LocationWidget';
+import DateWidget from '../ApiWidgets/DateWidget';
+import ReviewParamWidget from '../ApiWidgets/ReviewParamWidget';
 import ApiDataDisplay from '../ApiDataDisplay/ApiDataDisplay';
-import { verifyDatasetCategories, verifyDatasetLocation } from '../../middleware/api';
+import { verifyDatasetCategories, verifyDatasetLocation, getLocationDateConstraints } from '../../middleware/api';
 import { DATASETS } from '../../middleware/ApiConstants';
 
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
@@ -25,6 +27,10 @@ class Dashboard extends Component {
                 units: "standard"
             },
             datasetcategories: [],
+            dateConstraints: {
+                mindate: "",
+                maxdate: ""
+            },
             countries: [],
             metadata: {
                 isFetching: false,
@@ -44,8 +50,8 @@ class Dashboard extends Component {
         this._stepForwardFetchData = this._stepForwardFetchData.bind(this)
         this._stepBack = this._stepBack.bind(this)
         this._completeStepper = this._completeStepper.bind(this)
-        this._fetchDatasetCategories = this._fetchDatasetCategories.bind(this)
-        this._fetchDatasetLocation = this._fetchDatasetLocation.bind(this)
+        this._setDatasetFetchCategories = this._setDatasetFetchCategories.bind(this)
+        this._setLocationFetchDateConstraints = this._setLocationFetchDateConstraints.bind(this)
     }
 
     _handleChange(key, value, callback=null) {
@@ -55,7 +61,7 @@ class Dashboard extends Component {
         this.setState({apiParams: newState}, callback)
     }
 
-    _fetchDatasetCategories(key, value) {
+    _setDatasetFetchCategories(key, value) {
         this._handleChange(key, value, () => {
             const { datasetid } = this.state.apiParams;
             if (key === 'datasetid') {
@@ -84,7 +90,35 @@ class Dashboard extends Component {
         })
     }
 
-    _fetchDatasetLocation() {
+    _setLocationFetchDateConstraints(key, value) {
+        this._handleChange(key, value, () => {
+            const { locationid } = this.state.apiParams;
+            getLocationDateConstraints(locationid)
+                .then(res => {
+                    console.log('res here: ', res)
+                    return res.data
+                })
+                .then(data => {
+                    const newDates = {
+                        mindate: data.mindate,
+                        maxdate: data.maxdate
+                    }
+                    this.setState({dateConstraints: newDates})
+                })
+        })
+    }
+
+    _stepForward() {
+        const { dispatch } = this.props;
+        const { stepperIndex, lastStep } = this.state;
+        dispatch(setQueryParams(this.state.apiParams))
+        // dispatch(fetchGSOMData(this.state.apiParams))
+        this.setState({"stepperIndex": stepperIndex + 1})
+        this.setState({"lastStep": stepperIndex >= 4})
+    }
+
+    _stepForwardFetchLocations(event) {
+        this._stepForward(event)
         const { datacategoryid, datasetid } = this.state.apiParams;
         verifyDatasetLocation(datasetid, datacategoryid)
             .then(res => {
@@ -106,21 +140,6 @@ class Dashboard extends Component {
             })
     }
 
-    _stepForward() {
-        const { dispatch } = this.props;
-        const { stepperIndex, lastStep } = this.state;
-        dispatch(setQueryParams(this.state.apiParams))
-        // dispatch(fetchGSOMData(this.state.apiParams))
-        this.setState({"stepperIndex": stepperIndex + 1})
-        this.setState({"lastStep": stepperIndex >= 2})
-    }
-
-    _stepForwardFetchLocations(event) {
-        console.log(this.props)
-        this._stepForward(event)
-        this._fetchDatasetLocation()
-    }
-
     _stepForwardFetchData(event) {
         const { dispatch } = this.props
         this._stepForward(event)
@@ -138,8 +157,10 @@ class Dashboard extends Component {
 
     render() {
         const steps = [
-            <MetaDataWidget next={this._stepForwardFetchLocations} uiState={this.state.metadata} setParameter={this._fetchDatasetCategories} datasets={DATASETS} dataCategories={this.state.datasetcategories} paramVals={this.state.apiParams} />,
-            <LocationWidget next={this._stepForwardFetchData} previous={this._stepBack} uiState={this.state.locationUI} setParameter={this._handleChange} countries={this.state.countries} paramVals={this.state.apiParams} />,
+            <MetaDataWidget next={this._stepForwardFetchLocations} uiState={this.state.metadata} setParameter={this._setDatasetFetchCategories} datasets={DATASETS} dataCategories={this.state.datasetcategories} paramVals={this.state.apiParams} />,
+            <LocationWidget next={this._stepForward} previous={this._stepBack} uiState={this.state.locationUI} setParameter={this._setLocationFetchDateConstraints} countries={this.state.countries} paramVals={this.state.apiParams} />,
+            <DateWidget next={this._stepForward} previous={this._stepBack} setParameter={this._handleChange} dateConstraints={this.state.dateConstraints} paramVals={this.state.apiParams} />,
+            <ReviewParamWidget next={this._stepForwardFetchData} previous={this._stepBack} paramVals={this.state.apiParams} />,
             <ApiDataDisplay next={this._completeStepper} previous={this._stepBack} queryResults={this.props.GSOM}/>
         ]
         return (
@@ -153,7 +174,10 @@ class Dashboard extends Component {
                             <StepLabel>Choose Country</StepLabel>
                         </Step>
                         <Step>
-                            <StepLabel>Preview Data</StepLabel>
+                            <StepLabel>Choose Dates</StepLabel>
+                        </Step>
+                        <Step>
+                            <StepLabel>Review Parameters</StepLabel>
                         </Step>
                         <Step>
                             <StepLabel>Export to Chart</StepLabel>

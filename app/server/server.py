@@ -30,6 +30,7 @@ def query_noaa_api():
     try:
         api_response = requests.get(ENDPOINT, headers=headers)
         api_response.raise_for_status()
+        print api_response
         return jsonify(api_response.json())
     except requests.exceptions.RequestException as e:
         return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid api params."}})
@@ -47,6 +48,17 @@ def verify_dataset_categories():
 @app.route("/api/noaa/dataset/location")
 def verify_dataset_location():
     ENDPOINT = NOAA_ENDPOINT + "locations?" + request.query_string
+    try:
+        api_response = requests.get(ENDPOINT, headers=headers)
+        api_response.raise_for_status()
+        return jsonify(api_response.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid location id."}})
+
+@app.route("/api/noaa/location/info")
+def get_location_info():
+    location_id = request.args.get("locationid")
+    ENDPOINT = NOAA_ENDPOINT + "locations/" + location_id
     try:
         api_response = requests.get(ENDPOINT, headers=headers)
         api_response.raise_for_status()
