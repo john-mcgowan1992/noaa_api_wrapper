@@ -34,13 +34,13 @@ export const DATASETS =  [
 			"datacoverage": 0.95,
 			"id": "NEXRAD3"
 		},
-		{
-			"mindate": "2010-01-01",
-			"maxdate": "2010-01-01",
-			"name": "Normals Annual/Seasonal",
-			"datacoverage": 1,
-			"id": "NORMAL_ANN"
-		},
+		// {
+		// 	"mindate": "2010-01-01",
+		// 	"maxdate": "2010-01-01",
+		// 	"name": "Normals Annual/Seasonal",
+		// 	"datacoverage": 1,
+		// 	"id": "NORMAL_ANN"
+		// },
 		{
 			"mindate": "2010-01-01",
 			"maxdate": "2010-12-31",
