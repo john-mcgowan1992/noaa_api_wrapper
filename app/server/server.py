@@ -4,6 +4,8 @@ from flask import Response
 from flask import send_from_directory
 from flask import render_template
 from flask import jsonify
+import xmltodict
+import json
 import os.path
 import requests
 
@@ -30,10 +32,12 @@ def query_noaa_api():
     try:
         api_response = requests.get(ENDPOINT, headers=headers)
         api_response.raise_for_status()
-        print api_response
         return jsonify(api_response.json())
     except requests.exceptions.RequestException as e:
-        return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid api params."}})
+        parsed = xmltodict.parse(api_response.text)
+        json_str = json.dumps(parsed)
+        json_response = json.loads(json_str)
+        return jsonify(json_response)
 
 @app.route("/api/noaa/dataset/categories")
 def verify_dataset_categories():
