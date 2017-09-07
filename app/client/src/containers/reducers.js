@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
-import { REQUEST_GSOM_DATA, RECEIVE_GSOM_DATA, SET_QUERY_PARAMETERS } from './actions';
+import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR } from './actions';
 
-function GSOM(
+function response_data(
     state= {
         isFetching: false,
         data: []
@@ -9,11 +9,11 @@ function GSOM(
     action
 ) {
     switch(action.type) {
-        case REQUEST_GSOM_DATA:
+        case REQUEST_API_DATA:
             return Object.assign({}, state, {
                 isFetching: true
             });
-        case RECEIVE_GSOM_DATA:
+        case RECEIVE_API_DATA:
             return Object.assign({}, state, {
                 isFetching: false,
                 data: action.data
@@ -42,9 +42,26 @@ function queryParameters(
     }
 }
 
+function uiState(
+    state={
+        showNavbar: true
+    },
+    action
+) {
+    switch(action.type) {
+        case TOGGLE_NAVBAR:
+            return Object.assign({}, state, {
+                showNavbar: !state.showNavbar
+            })
+        default:
+        return state
+    }
+}
+
 const rootReducer = combineReducers({
-    GSOM,
-    queryParameters
+    response_data,
+    queryParameters,
+    uiState
 })
 
 export default rootReducer;

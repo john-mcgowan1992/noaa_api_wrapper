@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import { Link } from 'react-router-dom';
 
 import Home from 'material-ui/svg-icons/action/home';
+import Map from 'material-ui/svg-icons/maps/map';
 
 class NavMenu extends Component {
     render() {
@@ -18,6 +19,9 @@ class NavMenu extends Component {
                     <Divider />
                     <Link to="/">
                         <MenuItem primaryText="Home" leftIcon={<Home/>} onTouchTap={this.props.toggleMenu} />
+                    </Link>
+                    <Link to="/map">
+                        <MenuItem primaryText="Map" leftIcon={<Map/>} onTouchTap={this.props.toggleMenu} />
                     </Link>
                 </Drawer>
             </div>

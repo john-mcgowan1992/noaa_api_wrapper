@@ -69,3 +69,8 @@ def get_location_info():
         return jsonify(api_response.json())
     except requests.exceptions.RequestException as e:
         return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid location id."}})
+
+@app.route('/', defaults={'path': ''})
+@app.route("/<path:path>")
+def catchAll(path):
+    return render_template("index.html")
