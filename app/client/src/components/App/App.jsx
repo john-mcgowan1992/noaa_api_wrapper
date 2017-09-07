@@ -8,6 +8,7 @@ import './App.css';
 
 import Navbar from '../Navbar/Navbar.jsx';
 import Dashboard from '../Dashboard/Dashboard.jsx';
+import MapView from '../MapView/MapView';
 
 import { connect } from 'react-redux';
 import { fetchGSOMData } from '../../containers/actions';
@@ -22,20 +23,16 @@ const muiTheme = getMuiTheme({
 
 class App extends Component {
 
-    componentDidMount() {
-        // const { dispatch } = this.props;
-        // dispatch(fetchGSOMData());
-    }
-
     render() {
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className="App">
-                    <Router routerHistory={browserHistory} basename="/" >
+                    <Router history={browserHistory} basename="/" >
                         <div className="routeContainer">
-                            <Navbar />
+                            { this.props.uiState.showNavbar ? <Navbar/> : null }
                             <div className="viewContainer">
                                 <Route exact path="/" component={ Dashboard } />
+                                <Route path="/map" component={ MapView } />
                             </div>
                         </div>
                     </Router>

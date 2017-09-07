@@ -11,7 +11,7 @@ import { DATASETS } from '../../middleware/ApiConstants';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
 import { connect } from 'react-redux';
-import { setQueryParams, fetchGSOMData } from '../../containers/actions';
+import { setQueryParams, fetchApiData } from '../../containers/actions';
 
 class Dashboard extends Component {
 
@@ -112,7 +112,6 @@ class Dashboard extends Component {
         const { dispatch } = this.props;
         const { stepperIndex, lastStep } = this.state;
         dispatch(setQueryParams(this.state.apiParams))
-        // dispatch(fetchGSOMData(this.state.apiParams))
         this.setState({"stepperIndex": stepperIndex + 1})
         this.setState({"lastStep": stepperIndex >= 4})
     }
@@ -143,7 +142,7 @@ class Dashboard extends Component {
     _stepForwardFetchData(event) {
         const { dispatch } = this.props
         this._stepForward(event)
-        dispatch(fetchGSOMData(this.props.queryParameters))
+        dispatch(fetchApiData(this.props.queryParameters))
     }
 
     _stepBack() {
@@ -161,7 +160,7 @@ class Dashboard extends Component {
             <LocationWidget next={this._stepForward} previous={this._stepBack} uiState={this.state.locationUI} setParameter={this._setLocationFetchDateConstraints} countries={this.state.countries} paramVals={this.state.apiParams} />,
             <DateWidget next={this._stepForward} previous={this._stepBack} setParameter={this._handleChange} dateConstraints={this.state.dateConstraints} paramVals={this.state.apiParams} />,
             <ReviewParamWidget next={this._stepForwardFetchData} previous={this._stepBack} paramVals={this.state.apiParams} />,
-            <ApiDataDisplay next={this._completeStepper} previous={this._stepBack} queryResults={this.props.GSOM}/>
+            <ApiDataDisplay next={this._completeStepper} previous={this._stepBack} queryResults={this.props.response_data}/>
         ]
         return (
             <div className="Dashboard">
@@ -180,7 +179,7 @@ class Dashboard extends Component {
                             <StepLabel>Review Parameters</StepLabel>
                         </Step>
                         <Step>
-                            <StepLabel>Export to Chart</StepLabel>
+                            <StepLabel>Export to Map</StepLabel>
                         </Step>
                     </Stepper>
                 </div>
