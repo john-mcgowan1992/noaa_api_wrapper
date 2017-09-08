@@ -70,6 +70,16 @@ def get_location_info():
     except requests.exceptions.RequestException as e:
         return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid location id."}})
 
+@app.route("/api/noaa/datatypes")
+def get_datatypes_by_dataset():
+    ENDPOINT = NOAA_ENDPOINT + "datatypes?" + request.query_string
+    try:
+        api_response = requests.get(ENDPOINT, headers=headers)
+        api_response.raise_for_status()
+        return jsonify(api_response.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid dataset id."}})
+
 @app.route('/', defaults={'path': ''})
 @app.route("/<path:path>")
 def catchAll(path):

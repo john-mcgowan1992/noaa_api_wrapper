@@ -18,7 +18,8 @@ class ControlledSelect extends Component {
         })
         return (
             <SelectField floatingLabelText={this.props.label} style={{textAlign: "left"}} 
-                         value={this.props.value} onChange={this._changeWrapper} >
+                         value={this.props.value} onChange={this._changeWrapper}
+                         disabled={this.props.disabled || !options.length} >
                 {options}
             </SelectField>
         )
