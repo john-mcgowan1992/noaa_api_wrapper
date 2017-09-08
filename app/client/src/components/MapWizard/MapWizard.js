@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import ControlledSelect from '../ControlledSelect/ControlledSelect';
+import RaisedButton from 'material-ui/RaisedButton';
 import { DATASETS } from '../../middleware/ApiConstants';
 import './MapWizard.css';
 
@@ -25,6 +26,7 @@ class MapWizard extends Component {
                                         handleChange={this.props.setState} paramType="id" stateKey="datacategoryid" />
                     <ControlledSelect label="Data Types" options={this.props.dataTypes} value={this.props.params.datatypeid}
                                         handleChange={this.props.setState} paramType="id" stateKey="datatypeid" />
+                    <RaisedButton label="Fetch Stations" onClick={this.props.fetchStations} disabled={!this.props.dataTypes.length || !this.props.params.datatypeid} style={{margin: 15}} secondary={true} />
                 </div>
             </Paper>
         )

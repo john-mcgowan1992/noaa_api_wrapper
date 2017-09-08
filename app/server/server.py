@@ -80,6 +80,16 @@ def get_datatypes_by_dataset():
     except requests.exceptions.RequestException as e:
         return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid dataset id."}})
 
+@app.route("/api/noaa/stations")
+def get_stations_by_coords():
+    ENDPOINT = NOAA_ENDPOINT + "stations?" + request.query_string
+    try:
+        api_response = requests.get(ENDPOINT, headers=headers)
+        api_response.raise_for_status()
+        return jsonify(api_response.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({"ApiError": {"type": "InvalidParameters"}})
+
 @app.route('/', defaults={'path': ''})
 @app.route("/<path:path>")
 def catchAll(path):
