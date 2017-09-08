@@ -16,10 +16,12 @@ class ControlledDate extends Component {
     }
 
     _checkUserDefinedConstraints(dateStr, dateConstraint) {
-        if (!dateStr) {
+        if (dateStr) {
+            return this._dateStringToISO(dateStr)
+        } else if (dateConstraint) {
             return this._dateStringToISO(dateConstraint)
         } else {
-            return this._dateStringToISO(dateStr)
+            return this._dateStringToISO("1995-01-01")
         }
     }
 
