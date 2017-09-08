@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapWizard from '../MapWizard/MapWizard';
-import { verifyDatasetCategories, getDataTypesByDatasetCategory } from '../../middleware/api';
+import MapMarker from '../MapMarker/MapMarker';
+import { verifyDatasetCategories, getDataTypesByDatasetCategory, fetchStationsByCoordinates } from '../../middleware/api';
 import './MapView.css';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -30,6 +31,17 @@ class MapView extends Component {
                 datacategoryid: "",
                 datatypeid: ""
             },
+            boundingCoordinates: {
+                ne: {
+                    lat: 0,
+                    lng: 0
+                },
+                sw: {
+                    lat: 0,
+                    lng: 0
+                },
+                coordsToStr: [0, 0, 0, 0] 
+            },
             dataCategories: [],
             dataTypes: [],
             viewportStations: [],
@@ -41,6 +53,8 @@ class MapView extends Component {
         this._handleChange = this._handleChange.bind(this)
         this._fetchDataCategories = this._fetchDataCategories.bind(this)
         this._fetchDataTypes = this._fetchDataTypes.bind(this)
+        this._setBoundingCoordinates = this._setBoundingCoordinates.bind(this)
+        this._fetchStations = this._fetchStations.bind(this)
     }
 
     componentWillMount() {
@@ -65,10 +79,10 @@ class MapView extends Component {
             })
 
         if (key === 'datasetid') {
-            this.setState({apiParams: newState}, this._fetchDataCategories)
+            this.setState({apiParams: newState, dataCategories: [], dataTypes: []}, this._fetchDataCategories)
         } 
         else if (key === 'datacategoryid') {
-            this.setState({apiParams: newState}, this._fetchDataTypes)
+            this.setState({apiParams: newState, dataTypes: []}, this._fetchDataTypes)
         } 
         else {
             this.setState({apiParams: newState})
@@ -101,7 +115,34 @@ class MapView extends Component {
             })
     }
 
+    _fetchStations() {
+        const { apiParams, boundingCoordinates } = this.state
+        fetchStationsByCoordinates(apiParams, boundingCoordinates)
+        .then(res => {
+            return res.data;
+        })
+        .then(data => {
+            console.log("data: ", data);
+            if (data.results) {
+                this.setState({viewportStations: data.results})
+            }
+        })
+    }
+
+    _setBoundingCoordinates({center, zoom, bounds}) {
+        const { boundingCoordinates } = this.state
+        const newBounds = Object.assign({}, boundingCoordinates, {
+            ne: bounds.ne,
+            sw: bounds.sw,
+            coordsToStr: [bounds.sw.lat, bounds.sw.lng, bounds.ne.lat, bounds.ne.lng ]
+        })
+        this.setState({boundingCoordinates: newBounds})
+    }
+
     render() {
+        const markers = this.state.viewportStations.map((station, index) => {
+            return <MapMarker lat={station.latitude} lng={station.longitude} key={index} />
+        })
         return (
             <div className="MapView">
                 <Link to="/">
@@ -109,14 +150,16 @@ class MapView extends Component {
                         <ArrowBack/>
                     </FloatingActionButton>
                 </Link>
-                <MapWizard setState={this._handleChange} params={this.state.apiParams} dataCategories={this.state.dataCategories} dataTypes={this.state.dataTypes} />
+                <MapWizard setState={this._handleChange} params={this.state.apiParams} fetchStations={this._fetchStations} dataCategories={this.state.dataCategories} dataTypes={this.state.dataTypes} />
                 <div className="mapContainer">
                     <GoogleMapReact
                         defaultCenter={defaultProps.center}
                         defaultZoom={defaultProps.zoom}
+                        onChange={this._setBoundingCoordinates}
                         bootstrapURLKeys={{key: defaultProps.key}}
                         options={this.createMapOptions}
                     >
+                    { markers }
                     </GoogleMapReact>
                 </div>
             </div>
