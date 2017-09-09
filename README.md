@@ -5,6 +5,6 @@ The NOAA api wrapper provides a map interface and a step-by-step interface that 
 
 # Choose from thousands of distinct weather stations!
 
-![Alt text](/misc/NOAA_Wrapper_MapView.png?raw=true "Optional Title")
+![Alt text](/misc/NOAA_Wrapper_MapView.png?raw=true "Map View")
 
 Created by John McGowan.
