@@ -2,3 +2,8 @@
     padding: 5%;
     overflow: hidden;
 }
+
+.MapWizard .stationWarning {
+    margin: 20% auto;
+    text-align: center;
+}
