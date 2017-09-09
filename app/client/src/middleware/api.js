@@ -29,14 +29,15 @@ export function getDataTypesByDatasetCategory(datasetid, datacategoryid) {
     })
 }
 
-export function fetchStationsByCoordinates(params, coordinates) {
+export function fetchStationsByCoordinates(params, coordinates, mapZoom) {
     return axios.get("/api/noaa/stations", {
         params: {
             datasetid: params.datasetid,
             datatypeid: params.datatypeid,
             extent: coordinates.coordsToStr.join(","),
-            limit: 1000,
-            sortfield: 'datacoverage'
+            limit: mapZoom >= 5 ? 400 : 1000,
+            sortfield: 'datacoverage',
+            sortorder: 'asc'
         }
     })
 }

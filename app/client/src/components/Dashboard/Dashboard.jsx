@@ -71,12 +71,12 @@ class Dashboard extends Component {
                 })
                 this.setState({apiParams: resetParams})
             }
-            verifyDatasetCategories(datasetid)
-                .then(res => {
-                    const newState = Object.assign({}, this.state.metadata, {
+            const newState = Object.assign({}, this.state.metadata, {
                         isFetching: true,
                     })
-                    this.setState({metadata: newState})
+            this.setState({metadata: newState})
+            verifyDatasetCategories(datasetid)
+                .then(res => {
                     return res.data
                 })
                 .then(data => {
@@ -119,13 +119,13 @@ class Dashboard extends Component {
     _stepForwardFetchLocations(event) {
         this._stepForward(event)
         const { datacategoryid, datasetid } = this.state.apiParams;
-        verifyDatasetLocation(datasetid, datacategoryid)
-            .then(res => {
-                const newState = Object.assign({}, this.state.locationUI, {
+        const newState = Object.assign({}, this.state.locationUI, {
                     isFetching: true,
                     hasReturned: false
                 })
-                this.setState({locationUI: newState})
+        this.setState({locationUI: newState})
+        verifyDatasetLocation(datasetid, datacategoryid)
+            .then(res => {
                 return res.data
             })
             .then(data => {
