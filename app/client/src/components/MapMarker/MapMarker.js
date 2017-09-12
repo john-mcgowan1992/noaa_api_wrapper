@@ -9,7 +9,7 @@ class MapMarker extends Component {
             <div className="MapMarker">
                 <SettingsInputAntenna className="marker" style={{ position: 'relative', top: '-24px', left: '-12px', color: 'RGBA(234, 96, 46, .8)', zIndex: 1}} />
                 { this.props.isClicked || this.props.isHovered ? 
-                    <MapPopover className="popover" station={this.props.station} /> :
+                    <MapPopover className="popover" station={this.props.station} addStation={this.props.addStation} /> :
                     null
                 }
             </div>

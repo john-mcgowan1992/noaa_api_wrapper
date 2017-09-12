@@ -3,8 +3,8 @@ import axios from 'axios';
 export const REQUEST_API_DATA = "REQUEST_API_DATA";
 export const RECEIVE_API_DATA = "RECEIVE_API_DATA";
 export const SET_QUERY_PARAMETERS = "SET_QUERY_PARAMETERS";
-
 export const TOGGLE_NAVBAR = "TOGGLE_NAVBAR";
+export const ADD_WEATHER_STATION = "ADD_WEATHER_STATION";
 
 export function fetchApiData (requestParams) {
     return dispatch => {
