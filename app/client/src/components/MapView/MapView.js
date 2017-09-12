@@ -6,11 +6,12 @@ import { verifyDatasetCategories, getDataTypesByDatasetCategory, fetchStationsBy
 import './MapView.css';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import {default as Alert} from 'material-ui/Snackbar';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Timeline from 'material-ui/svg-icons/action/timeline';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { TOGGLE_NAVBAR } from '../../containers/actions';
+import { TOGGLE_NAVBAR, ADD_WEATHER_STATION } from '../../containers/actions';
 import { API_KEY } from '../../middleware/apiKey';
 
 const defaultProps = {
@@ -51,10 +52,10 @@ class MapView extends Component {
                 hover: -1,
                 clicked: -1
             },
-            savedStations: [],
             isFetchingCategories: false,
             isFetchingDataTypes: false,
-            isFetchingStations: false
+            isFetchingStations: false,
+            openAlert: false
         }
 
         this.createMapOptions = this.createMapOptions.bind(this)
@@ -67,6 +68,8 @@ class MapView extends Component {
         this._handleMarkerMouseLeave = this._handleMarkerMouseLeave.bind(this)
         this._handleMapClick = this._handleMapClick.bind(this)
         this._handleMarkerClick = this._handleMarkerClick.bind(this)
+        this._addSelectedStation = this._addSelectedStation.bind(this)
+        this._handleAlertClose = this._handleAlertClose.bind(this)
     }
 
     componentWillMount() {
@@ -126,7 +129,6 @@ class MapView extends Component {
         this.setState({isFetchingStations: true})
         fetchStationsByCoordinates(apiParams, boundingCoordinates, mapZoom)
         .then(res => {
-            console.log("data: ", res);
             this.setState({isFetchingStations: false})
             if (res.data.results) {
                 this.setState({viewportStations: res.data.results})
@@ -134,8 +136,21 @@ class MapView extends Component {
         })
     }
 
+    _addSelectedStation(station) {
+        const { dispatch, stations } = this.props
+        if (stations.stationList.indexOf(station) > -1) {
+            this.setState({openAlert: true})
+        }
+        else {
+            dispatch({type: ADD_WEATHER_STATION, station })
+        }
+    }
+
+    _handleAlertClose() {
+        this.setState({openAlert: false})
+    }
+
     _setBoundingCoordinates({center, zoom, bounds}) {
-        console.log(zoom, center);
         const { boundingCoordinates } = this.state
         const newBounds = Object.assign({}, boundingCoordinates, {
             ne: bounds.ne,
@@ -183,7 +198,7 @@ class MapView extends Component {
     render() {
         const { popoverIndexes, mapZoom, boundingCoordinates } = this.state
         const markers = this.state.viewportStations.map((station, index) => {
-            return <MapMarker lat={station.latitude} lng={station.longitude} station={station}
+            return <MapMarker lat={station.latitude} lng={station.longitude} station={station} addStation={this._addSelectedStation}
                                 isClicked={index === popoverIndexes.clicked} isHovered={index === popoverIndexes.hover} key={index} />
             })
             .filter((place, index) => {
@@ -202,12 +217,14 @@ class MapView extends Component {
                         <ArrowBack/>
                     </FloatingActionButton>
                 </Link>
-                <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}}>
-                    <Timeline/>
-                </FloatingActionButton>
+                <Link to="/charts">
+                    <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}} disabled={!this.props.stations.stationList.length} >
+                        <Timeline/>
+                    </FloatingActionButton>
+                </Link>
                 <MapWizard setState={this._handleChange} params={this.state.apiParams} fetchStations={this._fetchStations} 
                             dataCategories={this.state.dataCategories} dataTypes={this.state.dataTypes}
-                            savedStations={this.state.savedStations} isFetchingStations={this.state.isFetchingStations} />
+                            savedStations={this.props.stations.stationList} isFetchingStations={this.state.isFetchingStations} />
                 <div className="mapContainer">
                     <GoogleMapReact
                         defaultCenter={defaultProps.center}
@@ -222,6 +239,11 @@ class MapView extends Component {
                     >
                     { markers }
                     </GoogleMapReact>
+                    <Alert 
+                    open={this.state.openAlert}
+                    message="You already added this station!"
+                    autoHideDuration={2500}
+                    onRequestClose={this._handleAlertClose} />
                 </div>
             </div>
         )

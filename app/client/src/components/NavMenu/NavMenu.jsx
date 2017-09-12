@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 
 import Home from 'material-ui/svg-icons/action/home';
 import Map from 'material-ui/svg-icons/maps/map';
+import Timeline from 'material-ui/svg-icons/action/timeline';
 
 class NavMenu extends Component {
     render() {
@@ -22,6 +23,9 @@ class NavMenu extends Component {
                     </Link>
                     <Link to="/map">
                         <MenuItem primaryText="Map" leftIcon={<Map/>} onTouchTap={this.props.toggleMenu} />
+                    </Link>
+                    <Link to='/charts'>
+                        <MenuItem primaryText="Charts" leftIcon={<Timeline />} onTouchTap={this.props.toggleMenu} />
                     </Link>
                 </Drawer>
             </div>

@@ -25,7 +25,7 @@ class MapWizard extends Component {
             <Paper className="MapWizard" style={paperStyle}>
                 <div >
                     <Tabs>
-                        <Tab label="Params">
+                        <Tab label="Search">
                             <div className="paperContent">
                                 <ControlledSelect label="Dataset" options={DATASETS} value={this.props.params.datasetid}
                                                     handleChange={this.props.setState} paramType="id" stateKey="datasetid" />
@@ -40,16 +40,18 @@ class MapWizard extends Component {
                             </div>
                         </Tab>
                         <Tab label="Stations">
-                            <List>
-                                { this.props.savedStations.length ? this.props.savedStations.map((station, index) => {
-                                        return <ListItem primaryText={station.id} />
-                                    }) 
-                                    : <div className="stationWarning">
-                                        <Warning />
-                                        <p>No Stations selected.</p>
-                                    </div>
-                                }
-                            </List>
+                            <div className="stationList">
+                                <List>
+                                    { this.props.savedStations.length ? this.props.savedStations.map((station, index) => {
+                                            return <ListItem primaryText={station.id} key={station.id} />
+                                        }) 
+                                        : <div className="stationWarning">
+                                            <Warning />
+                                            <p>No Stations selected.</p>
+                                        </div>
+                                    }
+                                </List>
+                            </div>
                         </Tab>
                     </Tabs>
                 </div>

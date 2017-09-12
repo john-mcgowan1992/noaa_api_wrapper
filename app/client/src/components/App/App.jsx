@@ -9,6 +9,7 @@ import './App.css';
 import Navbar from '../Navbar/Navbar.jsx';
 import Dashboard from '../Dashboard/Dashboard.jsx';
 import MapView from '../MapView/MapView';
+import ChartView from '../ChartView/ChartView';
 
 import { connect } from 'react-redux';
 import { fetchGSOMData } from '../../containers/actions';
@@ -33,6 +34,7 @@ class App extends Component {
                             <div className="viewContainer">
                                 <Route exact path="/" component={ Dashboard } />
                                 <Route path="/map" component={ MapView } />
+                                <Route path='/charts' component={ ChartView } />
                             </div>
                         </div>
                     </Router>
