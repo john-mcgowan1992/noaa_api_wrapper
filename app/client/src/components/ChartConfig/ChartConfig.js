@@ -13,7 +13,8 @@ class ChartConfig extends Component {
         return (
             <div className="ChartConfig" >
                 <StepCard title="Configure Chart" cardStyle={cardStyle}>
-
+                    <div className="configContainer">
+                    </div>
                 </StepCard>
             </div>
         )

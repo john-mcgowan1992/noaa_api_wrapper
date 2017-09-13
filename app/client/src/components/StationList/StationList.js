@@ -15,11 +15,13 @@ class StationList extends Component {
             <div className="StationList">
                 <StepCard cardStyle={cardStyle} title="Select Station">
                     <List style={{textAlign: 'left'}}>
-                        {
-                            this.props.stations.map((station, index) => {
-                                return <ListItem primaryText={station.name} key={station.id} />
-                            })
-                        }
+                        <div className="listContainer">
+                            {
+                                this.props.stations.map((station, index) => {
+                                    return <ListItem primaryText={station.name} key={station.id} />
+                                })
+                            }
+                        </div>
                     </List>
                 </StepCard>
             </div>

@@ -11,7 +11,7 @@ import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Timeline from 'material-ui/svg-icons/action/timeline';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { TOGGLE_NAVBAR, ADD_WEATHER_STATION } from '../../containers/actions';
+import { TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION } from '../../containers/actions';
 import { API_KEY } from '../../middleware/apiKey';
 
 const defaultProps = {
@@ -55,7 +55,10 @@ class MapView extends Component {
             isFetchingCategories: false,
             isFetchingDataTypes: false,
             isFetchingStations: false,
-            openAlert: false
+            snackbarAlert: {
+                open: false,
+                message: ""
+            }
         }
 
         this.createMapOptions = this.createMapOptions.bind(this)
@@ -133,21 +136,40 @@ class MapView extends Component {
             if (res.data.results) {
                 this.setState({viewportStations: res.data.results})
             }
+            else {
+                const { snackbarAlert } = this.state
+                const newAlert = Object.assign({}, snackbarAlert, {
+                    open: true,
+                    message: "No results found in this area. Try searching another area!"
+                })
+                this.setState({viewportStations: []})
+                this.setState({snackbarAlert: newAlert})
+            }
         })
     }
 
     _addSelectedStation(station) {
-        const { dispatch, stations } = this.props
-        if (stations.stationList.indexOf(station) > -1) {
-            this.setState({openAlert: true})
+        const { dispatch, savedStations } = this.props
+        if (savedStations.stationList.indexOf(station) > -1) {
+            const { snackbarAlert } = this.state
+            const newAlert = Object.assign({}, snackbarAlert, {
+                open: true,
+                message: "You have already added this station."
+            })
+            this.setState({snackbarAlert: newAlert})
         }
         else {
-            dispatch({type: ADD_WEATHER_STATION, station })
+            dispatch({type: ADD_SAVED_WEATHER_STATION, station })
         }
     }
 
     _handleAlertClose() {
-        this.setState({openAlert: false})
+        const { snackbarAlert } = this.state
+        const closeAlert = Object.assign({}, snackbarAlert, {
+            open: false,
+            message: ""
+        })
+        this.setState({snackbarAlert: closeAlert})
     }
 
     _setBoundingCoordinates({center, zoom, bounds}) {
@@ -218,13 +240,13 @@ class MapView extends Component {
                     </FloatingActionButton>
                 </Link>
                 <Link to="/charts">
-                    <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}} disabled={!this.props.stations.stationList.length} >
+                    <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}} disabled={!this.props.savedStations.stationList.length} >
                         <Timeline/>
                     </FloatingActionButton>
                 </Link>
                 <MapWizard setState={this._handleChange} params={this.state.apiParams} fetchStations={this._fetchStations} 
                             dataCategories={this.state.dataCategories} dataTypes={this.state.dataTypes}
-                            savedStations={this.props.stations.stationList} isFetchingStations={this.state.isFetchingStations} />
+                            savedStations={this.props.savedStations.stationList} isFetchingStations={this.state.isFetchingStations} />
                 <div className="mapContainer">
                     <GoogleMapReact
                         defaultCenter={defaultProps.center}
@@ -240,8 +262,8 @@ class MapView extends Component {
                     { markers }
                     </GoogleMapReact>
                     <Alert 
-                    open={this.state.openAlert}
-                    message="You already added this station!"
+                    open={this.state.snackbarAlert.open}
+                    message={this.state.snackbarAlert.message}
                     autoHideDuration={2500}
                     onRequestClose={this._handleAlertClose} />
                 </div>

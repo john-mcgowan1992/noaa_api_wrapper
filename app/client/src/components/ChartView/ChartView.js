@@ -9,7 +9,7 @@ class ChartView extends Component {
     render() {
         return (
             <div className="ChartView">
-                <StationList stations={this.props.stations.stationList} />
+                <StationList stations={this.props.savedStations.stationList} />
                 <ChartConfig />
             </div>
         )
