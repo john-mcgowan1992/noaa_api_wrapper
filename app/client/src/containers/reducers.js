@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_WEATHER_STATION } from './actions';
+import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION } from './actions';
 
 function response_data(
     state= {
@@ -42,14 +42,14 @@ function queryParameters(
     }
 }
 
-function stations(
+function savedStations(
     state={
         stationList: []
     },
     action
 ) {
     switch(action.type) {
-        case ADD_WEATHER_STATION:
+        case ADD_SAVED_WEATHER_STATION:
             return Object.assign({}, state, {
                 stationList: [
                     ...state.stationList,
@@ -79,7 +79,7 @@ function uiState(
 
 const rootReducer = combineReducers({
     response_data,
-    stations,
+    savedStations,
     queryParameters,
     uiState
 })

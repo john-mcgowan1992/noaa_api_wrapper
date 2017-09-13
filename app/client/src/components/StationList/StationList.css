@@ -3,3 +3,8 @@
     margin: auto 3%;
     position: relative;
 }
+
+.StationList .listContainer {
+    overflow-y: auto;
+    height: 100%;
+}

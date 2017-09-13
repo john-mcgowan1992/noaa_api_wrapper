@@ -3,3 +3,7 @@
     display: inline-block;
     position: relative;
 }
+
+.ChartConfig .configContainer {
+    height: 100%;
+}
