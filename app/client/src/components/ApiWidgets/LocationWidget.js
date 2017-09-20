@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import StepCard from '../StepCard/StepCard';
-import './ApiWidget.css';
 import ControlledSelect from '../ControlledSelect/ControlledSelect';
 
 const containerStyle = {

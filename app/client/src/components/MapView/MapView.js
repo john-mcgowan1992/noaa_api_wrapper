@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import MapWizard from '../MapWizard/MapWizard';
 import MapMarker from '../MapMarker/MapMarker';
-import { verifyDatasetCategories, getDataTypesByDatasetCategory, fetchStationsByCoordinates } from '../../middleware/api';
-import './MapView.css';
+import { verifyDatasetCategories, getDataTypesByDatasetCategory, fetchStationsByCoordinates } from '../../api/api';
+import { API_KEY } from '../../api/apiKey';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import {default as Alert} from 'material-ui/Snackbar';
@@ -12,7 +12,6 @@ import Timeline from 'material-ui/svg-icons/action/timeline';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION, ADD_MAP_QUERY } from '../../containers/actions';
-import { API_KEY } from '../../middleware/apiKey';
 
 const defaultProps = {
         center: {lat: 34.7757, lng: -40.5720},

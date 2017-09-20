@@ -3,7 +3,6 @@ import StepCard from '../StepCard/StepCard';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import JSONTree from 'react-json-tree';
-import './ApiDataDisplay.css';
 
 const containerStyle = {
     maxWidth: 500,

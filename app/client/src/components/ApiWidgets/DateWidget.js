@@ -3,7 +3,6 @@ import ControlledDate from '../ControlledDate/ControlledDate';
 import StepCard from '../StepCard/StepCard';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import './ApiWidget.css';
 
 const containerStyle = {
     maxHeight: 800,

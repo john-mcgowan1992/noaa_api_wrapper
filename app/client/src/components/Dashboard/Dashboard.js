@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import './Dashboard.css';
 import MetaDataWidget from '../ApiWidgets/MetaDataWidget';
 import LocationWidget from '../ApiWidgets/LocationWidget';
 import DateWidget from '../ApiWidgets/DateWidget';
 import ReviewParamWidget from '../ApiWidgets/ReviewParamWidget';
 import ApiDataDisplay from '../ApiDataDisplay/ApiDataDisplay';
-import { verifyDatasetCategories, verifyDatasetLocation, getLocationDateConstraints } from '../../middleware/api';
-import { DATASETS } from '../../middleware/ApiConstants';
+import { verifyDatasetCategories, verifyDatasetLocation, getLocationDateConstraints } from '../../api/api';
+import { DATASETS } from '../../api/ApiConstants';
 
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
