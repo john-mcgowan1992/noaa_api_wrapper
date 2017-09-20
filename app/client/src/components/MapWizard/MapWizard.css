@@ -3,12 +3,24 @@
     overflow: hidden;
 }
 
-.MapWizard .stationWarning {
+.stationTab {
+    position: relative;
+    height: 300px;
+}
+
+.MapWizard .stationTab .stationList .stationWarning {
     margin: 20% auto;
     text-align: center;
 }
 
-.MapWizard .stationList {
-    max-height: 300px;
+.MapWizard .stationTab .stationList {
+    max-height: 220px;
     overflow-y: auto;
+}
+
+.MapWizard .stationTab .chartButton {
+    position: absolute;
+    margin: auto;
+    bottom: 0;
+    right: 30px;
 }

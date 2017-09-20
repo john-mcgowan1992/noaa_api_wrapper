@@ -10,7 +10,6 @@ class ControlledDate extends Component {
     }
 
     _changeWrapper(e, date) {
-        console.log(e, date);
         const isoDate = date.toISOString().split("T")[0];
         this.props.handleChange(this.props.stateKey, isoDate)
     }
@@ -20,8 +19,6 @@ class ControlledDate extends Component {
             return this._dateStringToISO(dateStr)
         } else if (dateConstraint) {
             return this._dateStringToISO(dateConstraint)
-        } else {
-            return this._dateStringToISO("1995-01-01")
         }
     }
 

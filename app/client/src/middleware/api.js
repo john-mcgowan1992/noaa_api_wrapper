@@ -37,7 +37,7 @@ export function fetchStationsByCoordinates(params, coordinates, mapZoom) {
             extent: coordinates.coordsToStr.join(","),
             limit: mapZoom >= 5 ? 400 : 1000,
             sortfield: 'datacoverage',
-            sortorder: 'asc'
+            sortorder: 'desc'
         }
     })
 }
@@ -46,6 +46,14 @@ export function getLocationDateConstraints(locationid) {
     return axios.get("/api/noaa/location/info", {
         params: {
             locationid
+        }
+    })
+}
+
+export function getStationInfo(stationid) {
+    return axios.get("/api/noaa/station/info", {
+        params: {
+            stationid
         }
     })
 }

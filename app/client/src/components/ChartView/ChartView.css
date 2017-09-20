@@ -1,5 +1,14 @@
 .ChartView {
-    width: 100%;
+    min-width: 100%;
     min-height: 95%;
     margin: 5% auto;
+    text-align: center;
+}
+
+.ChartView .configureChart {
+    width: 1200px;
+    max-width: 90%;
+    height: 750px;
+    max-height: 90%;
+    margin: auto;
 }

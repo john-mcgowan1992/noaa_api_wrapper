@@ -3,8 +3,10 @@ import './ChartConfig.css';
 import StepCard from '../StepCard/StepCard';
 
 const cardStyle = {
-    maxHeight: 700,
-    width: 800,
+    height: 400,
+    width: 600,
+    maxWidth: '90%',
+    maxHeight: '90%',
     margin: 'auto'
 }
 

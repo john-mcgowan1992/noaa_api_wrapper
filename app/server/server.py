@@ -90,6 +90,17 @@ def get_stations_by_coords():
     except requests.exceptions.RequestException as e:
         return jsonify({"ApiError": {"type": "InvalidParameters"}})
 
+@app.route("/api/noaa/station/info")
+def get_station_info():
+    stationid = request.args.get("stationid")
+    ENDPOINT = NOAA_ENDPOINT + "stations/" + stationid
+    try:
+        api_response = requests.get(ENDPOINT, headers=headers)
+        api_response.raise_for_status()
+        return jsonify(api_response.json())
+    except requests.exceptions.RequestException as e:
+        return jsonify({"ApiError": {"type": "InvalidParameters","message": "Invalid station id."}})
+
 @app.route('/', defaults={'path': ''})
 @app.route("/<path:path>")
 def catchAll(path):
