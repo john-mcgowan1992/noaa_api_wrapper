@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION, ADD_MAP_QUERY } from './actions';
+import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION, ADD_MAP_QUERY } from '../actions/index';
 
 function response_data(
     state= {

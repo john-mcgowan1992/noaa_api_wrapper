@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StepCard from '../StepCard/StepCard';
+import StepCard from './StepCard';
 import { List, ListItem } from 'material-ui/List';
 
 const cardStyle = {

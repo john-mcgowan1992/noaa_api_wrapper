@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import MetaDataWidget from '../ApiWidgets/MetaDataWidget';
-import LocationWidget from '../ApiWidgets/LocationWidget';
-import DateWidget from '../ApiWidgets/DateWidget';
-import ReviewParamWidget from '../ApiWidgets/ReviewParamWidget';
-import ApiDataDisplay from '../ApiDataDisplay/ApiDataDisplay';
-import { verifyDatasetCategories, verifyDatasetLocation, getLocationDateConstraints } from '../../api/api';
-import { DATASETS } from '../../api/ApiConstants';
+import MetaDataWidget from '../components/MetaDataWidget';
+import LocationWidget from '../components/LocationWidget';
+import DateWidget from '../components/DateWidget';
+import ReviewParamWidget from '../components/ReviewParamWidget';
+import ApiDataDisplay from '../components/ApiDataDisplay';
+import { verifyDatasetCategories, verifyDatasetLocation, getLocationDateConstraints } from '../api/api';
+import { DATASETS } from '../api/ApiConstants';
 
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
 import { connect } from 'react-redux';
-import { setQueryParams, fetchApiData } from '../../containers/actions';
+import { setQueryParams, fetchApiData } from '../actions/index';
 
 class Dashboard extends Component {
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ControlledDate from '../ControlledDate/ControlledDate';
-import StepCard from '../StepCard/StepCard';
+import ControlledDate from './ControlledDate';
+import StepCard from './StepCard';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 

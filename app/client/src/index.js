@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import configureStore from './containers/store'
+import configureStore from './store/store'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import App from './components/App/App';
+import App from './containers/App';
 import './styles/main.scss';
 
 injectTapEventPlugin();

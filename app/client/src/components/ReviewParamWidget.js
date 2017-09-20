@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StepCard from '../StepCard/StepCard';
+import StepCard from './StepCard';
 import Divider from 'material-ui/Divider';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';

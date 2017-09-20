@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SettingsInputAntenna from 'material-ui/svg-icons/action/settings-input-antenna';
-import MapPopover from '../MapPopover/MapPopover';
+import MapPopover from './MapPopover';
 
 class MapMarker extends Component {
     render() {
