@@ -1,0 +1,29 @@
+.MapWizard {
+
+    .paperContent {
+        padding: 5%;
+        overflow: hidden;
+    }
+
+    .stationTab {
+        position: relative;
+        height: 30vh;
+
+        .stationList {
+            max-height: 80%;
+            overflow-y: auto;
+
+            .stationWarning {
+                margin: 20% auto;
+                text-align: center;
+            }
+        }
+
+        .chartButton {
+            position: absolute;
+            margin: auto;
+            bottom: 0;
+            right: 30px;
+        }
+    }
+}

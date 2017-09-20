@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './SelectDates.css';
 import ControlledDate from '../ControlledDate/ControlledDate';
 import RaisedButton from 'material-ui/RaisedButton';
 

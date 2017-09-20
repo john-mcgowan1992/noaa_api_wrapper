@@ -13,7 +13,7 @@
 app/server/defaults.py
 launcher/database.py
 launcher/launcher_defaults.py
-app/client/src/middleware/apiKey.js
+app/client/src/api/apiKey.js
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

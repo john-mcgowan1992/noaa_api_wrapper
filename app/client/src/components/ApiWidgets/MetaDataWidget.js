@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import StepCard from '../StepCard/StepCard';
-import './ApiWidget.css';
 import ControlledText from '../ControlledText/ControlledText';
 import ControlledSelect from '../ControlledSelect/ControlledSelect';
 
@@ -30,8 +29,3 @@ class ApiWidget extends Component {
 }
 
 export default ApiWidget;
-
-
-// <ControlledSelect label="Country" value={this.props.paramVals.locationid} handleChange={this.props.setParameter} paramType="id" options={this.props.countries} stateKey="locationid" />
-// <ControlledText floatingLabel="Start Date" hintText="1964-07-13" handleChange={this.props.setParameter} value={this.props.paramVals.startdate} stateKey="startdate" />
-// <ControlledText floatingLabel="End Date" hintText="1972-02-02" handleChange={this.props.setParameter} value={this.props.paramVals.enddate} stateKey="enddate" />

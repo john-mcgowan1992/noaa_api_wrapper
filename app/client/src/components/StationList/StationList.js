@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './StationList.css';
 import StepCard from '../StepCard/StepCard';
 import { List, ListItem } from 'material-ui/List';
 

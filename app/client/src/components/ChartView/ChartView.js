@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './ChartView.css';
 import StationList from '../StationList/StationList';
 import SelectStation from '../SelectStation/SelectStation';
 import SelectDates from '../SelectDates/SelectDates';
@@ -7,7 +6,7 @@ import ApiDataReview from '../ApiDataReview/ApiDataReview';
 import Paper from 'material-ui/Paper';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
-import { getStationInfo } from '../../middleware/api';
+import { getStationInfo } from '../../api/api';
 import { fetchApiData } from '../../containers/actions';
 
 import { connect } from 'react-redux';

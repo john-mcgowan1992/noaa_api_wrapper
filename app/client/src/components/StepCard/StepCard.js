@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import AppBar from 'material-ui/AppBar';
-import './StepCard.css';
 
 class StepCard extends Component {
     render() {
@@ -18,4 +17,4 @@ class StepCard extends Component {
     }
 }
 
-export default StepCard;
+export default StepCard

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import Add from 'material-ui/svg-icons/content/add';
-import './MapPopover.css';
 
 class MapPopover extends Component {
     constructor() {

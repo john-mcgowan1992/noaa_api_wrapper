@@ -4,10 +4,9 @@ import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { greenA400, greenA200, pink300 } from 'material-ui/styles/colors';
-import './App.css';
 
 import Navbar from '../Navbar/Navbar.jsx';
-import Dashboard from '../Dashboard/Dashboard.jsx';
+import Dashboard from '../Dashboard/Dashboard';
 import MapView from '../MapView/MapView';
 import ChartView from '../ChartView/ChartView';
 

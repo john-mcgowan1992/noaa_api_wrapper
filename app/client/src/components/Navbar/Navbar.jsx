@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import NavMenu from '../NavMenu/NavMenu.jsx';
-import './Navbar.css';
 
 class Navbar extends Component {
     constructor() {

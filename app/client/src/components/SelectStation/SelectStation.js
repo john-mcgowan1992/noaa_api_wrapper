@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './SelectStation.css';
 import ControlledSelect from '../ControlledSelect/ControlledSelect';
 import RaisedButton from 'material-ui/RaisedButton';
 

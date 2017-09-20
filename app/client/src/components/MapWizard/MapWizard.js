@@ -7,8 +7,7 @@ import Warning from 'material-ui/svg-icons/alert/warning';
 import { Link } from 'react-router-dom';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { List, ListItem } from 'material-ui/List';
-import { DATASETS } from '../../middleware/ApiConstants';
-import './MapWizard.css';
+import { DATASETS } from '../../api/ApiConstants';
 
 const paperStyle = {
     width: 220,
