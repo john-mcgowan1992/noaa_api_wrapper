@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION } from './actions';
+import { REQUEST_API_DATA, RECEIVE_API_DATA, SET_QUERY_PARAMETERS, TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION, ADD_MAP_QUERY } from './actions';
 
 function response_data(
     state= {
@@ -42,9 +42,55 @@ function queryParameters(
     }
 }
 
+function queriesById(state={}, action) {
+    switch(action.type) {
+        case ADD_MAP_QUERY:
+            return {
+                    ...state,
+                    [ action.id ]: {
+                        stationIds: []
+                    }
+                }
+        case ADD_SAVED_WEATHER_STATION:
+            const query = state[action.queryKey]
+            return {
+                ...state,
+                [ action.queryKey ]: {
+                    stationIds: [
+                        ...query.stationIds,
+                        action.station.id
+                    ]
+                }
+            }
+        default:
+            return state
+    }
+}
+
+function allQueries(state=[], action) {
+    switch(action.type) {
+        case ADD_MAP_QUERY:
+            return [
+                ...state,
+                action.id
+            ]
+        default:
+            return state
+    }
+}
+
+const mapQueries = combineReducers({
+    byId: queriesById,
+    allIds: allQueries
+})
+
 function savedStations(
     state={
-        stationList: []
+        stationList: [],
+        stations: {
+            byId: {},
+            ids: []
+        }
     },
     action
 ) {
@@ -52,9 +98,21 @@ function savedStations(
         case ADD_SAVED_WEATHER_STATION:
             return Object.assign({}, state, {
                 stationList: [
-                    ...state.stationList,
-                    action.station
-                ]
+                        ...state.stationList,
+                        action.station
+                    ],
+                stations: {
+                    byId: {
+                        ...state.stations.byId,
+                        [ action.station.id ]: {
+                            ...action.station
+                        }
+                    },
+                    ids: [
+                        ...state.stations.ids,
+                        action.station.id
+                    ]
+                }
             })
         default:
             return state;
@@ -80,6 +138,7 @@ function uiState(
 const rootReducer = combineReducers({
     response_data,
     savedStations,
+    mapQueries,
     queryParameters,
     uiState
 })

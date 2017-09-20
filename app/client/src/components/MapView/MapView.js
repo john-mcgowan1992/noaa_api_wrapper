@@ -11,7 +11,7 @@ import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Timeline from 'material-ui/svg-icons/action/timeline';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION } from '../../containers/actions';
+import { TOGGLE_NAVBAR, ADD_SAVED_WEATHER_STATION, ADD_MAP_QUERY } from '../../containers/actions';
 import { API_KEY } from '../../middleware/apiKey';
 
 const defaultProps = {
@@ -129,12 +129,15 @@ class MapView extends Component {
 
     _fetchStations() {
         const { apiParams, boundingCoordinates, mapZoom } = this.state
+        const { dispatch } = this.props
         this.setState({isFetchingStations: true})
         fetchStationsByCoordinates(apiParams, boundingCoordinates, mapZoom)
         .then(res => {
             this.setState({isFetchingStations: false})
             if (res.data.results) {
+                const queryKey = [apiParams.datasetid, apiParams.datacategoryid, apiParams.datatypeid].join(".")
                 this.setState({viewportStations: res.data.results})
+                dispatch({type: ADD_MAP_QUERY, id: queryKey})
             }
             else {
                 const { snackbarAlert } = this.state
@@ -149,8 +152,10 @@ class MapView extends Component {
     }
 
     _addSelectedStation(station) {
-        const { dispatch, savedStations } = this.props
-        if (savedStations.stationList.indexOf(station) > -1) {
+        const { dispatch, mapQueries } = this.props
+        const { apiParams } = this.state
+        const queryKey = [apiParams.datasetid, apiParams.datacategoryid, apiParams.datatypeid].join(".")
+        if (mapQueries.byId[queryKey].stationIds.indexOf(station.id) > -1) {
             const { snackbarAlert } = this.state
             const newAlert = Object.assign({}, snackbarAlert, {
                 open: true,
@@ -159,7 +164,11 @@ class MapView extends Component {
             this.setState({snackbarAlert: newAlert})
         }
         else {
-            dispatch({type: ADD_SAVED_WEATHER_STATION, station })
+            dispatch({
+                type: ADD_SAVED_WEATHER_STATION, 
+                station,
+                queryKey
+             })
         }
     }
 

@@ -4,6 +4,7 @@ import ControlledSelect from '../ControlledSelect/ControlledSelect';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Warning from 'material-ui/svg-icons/alert/warning';
+import { Link } from 'react-router-dom';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { List, ListItem } from 'material-ui/List';
 import { DATASETS } from '../../middleware/ApiConstants';
@@ -40,18 +41,23 @@ class MapWizard extends Component {
                             </div>
                         </Tab>
                         <Tab label="Stations">
-                            <div className="stationList">
+                            <div className="stationTab">
+                                <div className="stationList">
                                 <List>
                                     { this.props.savedStations.length ? this.props.savedStations.map((station, index) => {
-                                            return <ListItem primaryText={station.id} key={station.id} />
-                                        }) 
-                                        : <div className="stationWarning">
-                                            <Warning />
-                                            <p>No Stations selected.</p>
-                                        </div>
-                                    }
-                                </List>
-                            </div>
+                                                return <ListItem primaryText={station.id} key={station.id} />
+                                            }) 
+                                            : <div className="stationWarning">
+                                                <Warning />
+                                                <p>No Stations selected.</p>
+                                            </div>
+                                        }
+                                    </List>
+                                </div>
+                                <div className="chartButton">
+                                    { this.props.savedStations.length ? <Link to="/charts"><RaisedButton label="Chart Stations" secondary={true} /></Link> : ""}
+                                </div> 
+                            </div>                           
                         </Tab>
                     </Tabs>
                 </div>

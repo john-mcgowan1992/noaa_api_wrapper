@@ -3,6 +3,9 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 
 class ControlledSelect extends Component {
+    static defaultProps = {
+        valueType: "id"
+    }
     constructor() {
         super()
         this._changeWrapper = this._changeWrapper.bind(this)
@@ -13,8 +16,9 @@ class ControlledSelect extends Component {
     }
 
     render() {
-        const options = this.props.options.map((option, key) => {
-            return <MenuItem primaryText={option.name} value={option.id} key={key} />
+        const options = this.props.options.map((option, index) => {
+            option.index = index
+            return <MenuItem primaryText={option.name} value={option[this.props.valueType]} key={index} />
         })
         return (
             <SelectField floatingLabelText={this.props.label} style={{textAlign: "left"}} 

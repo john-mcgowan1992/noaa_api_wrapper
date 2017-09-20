@@ -2,6 +2,7 @@
     margin: auto 3%;
     display: inline-block;
     position: relative;
+    max-width: 80%;
 }
 
 .ChartConfig .configContainer {

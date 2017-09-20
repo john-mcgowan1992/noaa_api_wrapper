@@ -2,13 +2,16 @@
   min-height: 100%;
   position: relative;
   font-family: Roboto, sans-serif;
+  box-sizing: border-box;
 }
 
 .App .routeContainer {
   padding-bottom: 60px;
+  min-height: 100%;
 }
 
 .App .viewContainer {
   max-width: 95%;
+  min-height: 90%;
   margin: auto;
 }
