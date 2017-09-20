@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import ControlledSelect from '../ControlledSelect/ControlledSelect';
+import ControlledSelect from './ControlledSelect';
 import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Warning from 'material-ui/svg-icons/alert/warning';
 import { Link } from 'react-router-dom';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { List, ListItem } from 'material-ui/List';
-import { DATASETS } from '../../api/ApiConstants';
+import { DATASETS } from '../api/ApiConstants';
 
 const paperStyle = {
     width: 220,

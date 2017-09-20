@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ControlledSelect from '../ControlledSelect/ControlledSelect';
+import ControlledSelect from './ControlledSelect';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class SelectStation extends Component {

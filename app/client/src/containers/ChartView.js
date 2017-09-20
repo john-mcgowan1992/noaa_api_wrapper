@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import StationList from '../StationList/StationList';
-import SelectStation from '../SelectStation/SelectStation';
-import SelectDates from '../SelectDates/SelectDates';
-import ApiDataReview from '../ApiDataReview/ApiDataReview';
+import StationList from '../components/StationList';
+import SelectStation from '../components/SelectStation';
+import SelectDates from '../components/SelectDates';
+import ApiDataReview from '../components/ApiDataReview';
 import Paper from 'material-ui/Paper';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
-import { getStationInfo } from '../../api/api';
-import { fetchApiData } from '../../containers/actions';
+import { getStationInfo } from '../api/api';
+import { fetchApiData } from '../actions/index';
 
 import { connect } from 'react-redux';
 

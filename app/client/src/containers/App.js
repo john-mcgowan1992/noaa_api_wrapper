@@ -5,13 +5,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { greenA400, greenA200, pink300 } from 'material-ui/styles/colors';
 
-import Navbar from '../Navbar/Navbar.jsx';
-import Dashboard from '../Dashboard/Dashboard';
-import MapView from '../MapView/MapView';
-import ChartView from '../ChartView/ChartView';
+import Navbar from '../components/Navbar';
+import Dashboard from './Dashboard';
+import MapView from './MapView';
+import ChartView from './ChartView';
 
 import { connect } from 'react-redux';
-import { fetchGSOMData } from '../../containers/actions';
 
 const muiTheme = getMuiTheme({
     palette: {

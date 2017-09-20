@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import ControlledDate from '../ControlledDate/ControlledDate';
+import ControlledDate from './ControlledDate';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class SelectDates extends Component {

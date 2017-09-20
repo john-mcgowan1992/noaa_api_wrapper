@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import StepCard from '../StepCard/StepCard';
-import ControlledText from '../ControlledText/ControlledText';
-import ControlledSelect from '../ControlledSelect/ControlledSelect';
+import StepCard from './StepCard';
+import ControlledText from './ControlledText';
+import ControlledSelect from './ControlledSelect';
 
 const containerStyle = {
     maxHeight: 800,
