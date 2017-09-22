@@ -76,7 +76,7 @@ class ChartView extends Component {
     }
     _fetchStationData() {
         const { stationId, queryKey } = this.state
-        const { dispatch, savedStations } = this.props
+        const { dispatch } = this.props
         const query = queryKey.split(".")
         this._incrementStepper()
         const params = {
