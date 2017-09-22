@@ -27,13 +27,11 @@ class App extends Component {
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div className="App">
                     <Router history={browserHistory} basename="/" >
-                        <div className="routeContainer">
+                        <div className="viewContainer">
                             { this.props.uiState.showNavbar ? <Navbar/> : null }
-                            <div className="viewContainer">
                                 <Route exact path="/" component={ Dashboard } />
                                 <Route path="/map" component={ MapView } />
                                 <Route path='/charts' component={ ChartView } />
-                            </div>
                         </div>
                     </Router>
                 </div>

@@ -1,29 +1,61 @@
 .MapWizard {
+    width: 405px;
+    height: 45vh;
+    min-height: 450px;
+    margin: auto;
+    position: absolute;
+    top: 20px;
+    right:0;
+    z-index: 99;
+    background-color: #fff;
+    box-shadow: .5em 0 2em #000;
+    transition: all .75s ease;
 
-    .paperContent {
-        padding: 5%;
-        overflow: hidden;
+    &.hide-wizard {
+        right: -405px;
+        transition: all .75s ease;
     }
 
-    .stationTab {
-        position: relative;
-        height: 30vh;
+    .control-tab {
+        height: 50px;
+        width: 30px;
+        position: absolute;
+        top: 100px;
+        left: -30px;
+        background-color: #5ceae5;
+        box-shadow: -.5em 0 1.25em #5a5a5a;
 
-        .stationList {
-            max-height: 80%;
-            overflow-y: auto;
+        .chevron {
+            margin-top: 15px;
+            cursor: pointer;
 
-            .stationWarning {
-                margin: 20% auto;
-                text-align: center;
+            &.rotate {
+                transform: rotate(180deg);
+                transition: all .25s ease;
             }
         }
+    }
 
-        .chartButton {
-            position: absolute;
-            margin: auto;
-            bottom: 0;
-            right: 30px;
+    .content {
+
+        .button-container {
+            margin: 3% auto;
         }
+    }
+
+    .stationList {
+        height: 330px;
+        overflow-y: auto;
+        margin-top: 3%;
+
+        .stationWarning {
+            margin: 40% auto;
+            text-align: center;
+        }
+    }
+
+    .chartButton {
+        text-align: center;
+        margin-top: 7%;
     }
 }

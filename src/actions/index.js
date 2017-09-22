@@ -17,11 +17,12 @@ export const SET_MAP_CONFIG = "SET_MAP_CONFIG";
 export function fetchApiData (requestParams) {
     return dispatch => {
         dispatch({ type: REQUEST_API_DATA, requestParams })
+        console.log("req: ", requestParams);
         axios.get("/api/noaa/data", {
             params: requestParams
         })
         .then(res => {
-            console.log("res:", res);
+            console.log("res: ", res.data);
             return res.data
         })
         .then(data => dispatch({ type: RECEIVE_API_DATA, data }))

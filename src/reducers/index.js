@@ -45,12 +45,17 @@ function queryParameters(
 function queriesById(state={}, action) {
     switch(action.type) {
         case ADD_MAP_QUERY:
-            return {
+            if (state[action.id]) {
+                return state
+            }
+            else {
+                return {
                     ...state,
                     [ action.id ]: {
                         stationIds: []
                     }
                 }
+            }
         case ADD_SAVED_WEATHER_STATION:
             const query = state[action.queryKey]
             return {
@@ -70,10 +75,15 @@ function queriesById(state={}, action) {
 function allQueries(state=[], action) {
     switch(action.type) {
         case ADD_MAP_QUERY:
-            return [
-                ...state,
-                action.id
-            ]
+            if (state.indexOf(action.id) > -1) {
+                return state
+            }
+            else {
+                return [
+                    ...state,
+                    action.id
+                ]
+            }
         default:
             return state
     }

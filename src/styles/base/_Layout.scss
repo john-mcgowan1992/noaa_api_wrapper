@@ -1,0 +1,39 @@
+.flex-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    
+    &>div {
+        flex: 1;
+    }
+}
+
+.flex-item {
+    flex: 1;
+}
+
+.item-md {
+    min-width: 40%;
+    max-height: 70%;
+}
+
+.fill-parent {
+    height: 100%;
+}
+
+.spread-children > div {
+    margin: 3% 0;
+}
+
+.relative-parent {
+    position: absolute;
+    top:40px;
+    right: 0;
+    height: 45vh;
+    min-height: 495px;
+    width: 500px;
+    overflow: hidden;
+}

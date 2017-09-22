@@ -1,10 +1,17 @@
 .MapMarker {
 
-    svg.marker {
+    svg.antennaMarker {
         position: relative;
         top: -24px;
         left: -12px;
         z-index: 1;
+    }
+
+    svg.addMarker {
+        position: relative;
+        top: -30px;
+        left: -18px;
+        z-index: 50;
     }
 
     &:hover {
