@@ -94,7 +94,6 @@ class Dashboard extends Component {
             const { locationid } = this.state.apiParams;
             getLocationDateConstraints(locationid)
                 .then(res => {
-                    console.log('res here: ', res)
                     return res.data
                 })
                 .then(data => {
@@ -128,7 +127,6 @@ class Dashboard extends Component {
                 return res.data
             })
             .then(data => {
-                console.log("data: ", data);
                 this.setState({countries: data.results})
                 const newState = Object.assign({}, this.state.locationUI, {
                     isFetching: false,
@@ -150,7 +148,6 @@ class Dashboard extends Component {
     }
 
     _completeStepper() {
-        console.log("Complete!")
     }
 
     render() {

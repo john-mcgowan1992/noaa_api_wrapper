@@ -31,13 +31,15 @@ const theme = {
 class ApiDataReview extends Component {
     render() {
         return (
-            <div className="ApiDataReview">
-                <div className="dataResults">
-                    <JSONTree data={this.props.queryResults.data} theme={theme} hideRoot={true} invertTheme={true} />
-                </div>
-                <div className="stepButton">
-                    <FlatButton onClick={this.props.previous} style={{margin: 15}} label="Back" />
-                    <RaisedButton onClick={this.props.next} style={{margin: 15}} label="Next" secondary={true}/>
+            <div className="ApiDataDisplay">
+                <div className="resultsContainer">
+                    <div className="dataResults">
+                        <JSONTree data={this.props.queryResults.data} theme={theme} hideRoot={true} invertTheme={true} />
+                    </div>
+                    <div className="stepButton">
+                        <FlatButton onClick={this.props.previous} style={{margin: 15}} label="Back" />
+                        <RaisedButton onClick={this.props.next} style={{margin: 15}} label="Next" secondary={true}/>
+                    </div>
                 </div>
             </div>
         )

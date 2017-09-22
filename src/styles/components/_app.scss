@@ -1,14 +1,8 @@
 .App {
-    min-height: 100%;
-    position: relative;
+    height: 100%;
     box-sizing: border-box;
-    .routeContainer {
-        padding-bottom: 60px;
-        min-height: 100%;
-    }
+
     .viewContainer {
-        max-width: 95%;
-        min-height: 90%;
-        margin: auto;
+        height: 100%;
     }
 }

@@ -152,10 +152,9 @@ class MapView extends Component {
 
     _addSelectedStation(station) {
         const { dispatch, mapQueries } = this.props
-        const { apiParams } = this.state
+        const { apiParams, snackbarAlert } = this.state
         const queryKey = [apiParams.datasetid, apiParams.datacategoryid, apiParams.datatypeid].join(".")
         if (mapQueries.byId[queryKey].stationIds.indexOf(station.id) > -1) {
-            const { snackbarAlert } = this.state
             const newAlert = Object.assign({}, snackbarAlert, {
                 open: true,
                 message: "You have already added this station."
@@ -168,6 +167,11 @@ class MapView extends Component {
                 station,
                 queryKey
              })
+             const newAlert = Object.assign({}, snackbarAlert, {
+                    open: true,
+                    message: `Added station ${station.id}.`
+                })
+            this.setState({snackbarAlert: newAlert})
         }
     }
 
@@ -248,13 +252,13 @@ class MapView extends Component {
                     </FloatingActionButton>
                 </Link>
                 <Link to="/charts">
-                    <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}} disabled={!this.props.savedStations.stationList.length} >
+                    <FloatingActionButton mini={true} style={{position: "absolute", left: 30, top: 80}} disabled={!this.props.savedStations.stations.ids.length} >
                         <Timeline/>
                     </FloatingActionButton>
                 </Link>
                 <MapWizard setState={this._handleChange} params={this.state.apiParams} fetchStations={this._fetchStations} 
                             dataCategories={this.state.dataCategories} dataTypes={this.state.dataTypes}
-                            savedStations={this.props.savedStations.stationList} isFetchingStations={this.state.isFetchingStations} />
+                            selectedStations={this.props.savedStations.stations} isFetchingStations={this.state.isFetchingStations} />
                 <div className="mapContainer">
                     <GoogleMapReact
                         defaultCenter={defaultProps.center}
@@ -272,7 +276,7 @@ class MapView extends Component {
                     <Alert 
                     open={this.state.snackbarAlert.open}
                     message={this.state.snackbarAlert.message}
-                    autoHideDuration={2500}
+                    autoHideDuration={1200}
                     onRequestClose={this._handleAlertClose} />
                 </div>
             </div>

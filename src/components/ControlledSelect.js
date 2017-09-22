@@ -17,11 +17,25 @@ class ControlledSelect extends Component {
 
     render() {
         const options = this.props.options.map((option, index) => {
-            option.index = index
-            return <MenuItem primaryText={option.name} value={option[this.props.valueType]} key={index} />
+            let value,
+                text;
+            const {valueType } = this.props
+            if (valueType === "self") {
+                value = option
+                text = option
+            } 
+            else if (valueType === "index") {
+                value = index
+                text = option
+            } 
+            else {
+                value = option[valueType]
+                text = option.name
+            }
+            return <MenuItem primaryText={text} value={value} key={index} />
         })
         return (
-            <SelectField floatingLabelText={this.props.label} style={{textAlign: "left"}} 
+            <SelectField floatingLabelText={this.props.label} style={{textAlign: "left"}} autoWidth={true} 
                          value={this.props.value} onChange={this._changeWrapper}
                          disabled={this.props.disabled || !options.length} >
                 {options}

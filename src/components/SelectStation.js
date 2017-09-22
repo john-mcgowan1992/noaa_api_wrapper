@@ -5,18 +5,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 class SelectStation extends Component {
     constructor() {
         super()
-        this._setStation = this._setStation.bind(this)
+        this._setQueryState = this._setQueryState.bind(this)
     }
-    _setStation(key, value) {
+    _setQueryState(key, value) {
         this.props.dynamicSetState(key, value)
     }
     render() {
         return (
             <div className="SelectStation">
-                <ControlledSelect label="Station ID" value={this.props.selected} stateKey={this.props.stateKey}
-                                  handleChange={this._setStation} options={this.props.stations} valueType={"index"} />
+                <ControlledSelect label="Query Parameters" value={this.props.query} stateKey={this.props.queryKey} handleChange={this._setQueryState}
+                                    options={this.props.queries.allIds} valueType={"self"} />
+                <ControlledSelect label="Station ID" value={this.props.station} stateKey={this.props.stationKey}
+                                  handleChange={this._setQueryState} options={this.props.stations.ids} valueType={"self"} disabled={!this.props.query} />
                 <div className="buttonContainer">
-                    <RaisedButton disabled={!this.props.stations[this.props.selected]} label="Next" onClick={this.props.next} secondary={true}/>
+                    <RaisedButton disabled={this.props.stations.ids.indexOf(this.props.station) < 0} label="Next" onClick={this.props.next} secondary={true}/>
                 </div>
             </div>
         )
