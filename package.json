@@ -4,7 +4,8 @@
   "description": "NOAA api wrapper provides a user friendly interface with the NOAA climate api.",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently \"python -m flask run\" \"webpack-dev-server\" "
+    "start": "concurrently \"python -m flask run\" \"webpack-dev-server\" ",
+    "dev": "webpack-dev-server"
   },
   "proxy": "http://localhost:5000",
   "author": "John McGowan",
